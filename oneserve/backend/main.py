@@ -4,6 +4,7 @@ from db.database import init_db
 from routers import auth, complaints, locker, certificates, notifications, dashboard, admin_users
 from fastapi import HTTPException
 from fastapi.responses import FileResponse
+from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -31,7 +32,6 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# CORS configuration
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -41,7 +41,9 @@ app.add_middleware(
         "http://127.0.0.1:5174",
         "http://localhost:3000",
         "http://127.0.0.1:3000",
+        "https://oneserve-psi.vercel.app"
     ],
+    allow_origin_regex=r"https://.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
